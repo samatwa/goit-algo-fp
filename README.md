@@ -7,7 +7,7 @@
 Результати розрахунків за методом Монте-Карло та аналітичні розрахунки наведено нижче:
 
 **Monte Carlo probabilities**:\
-Sum	Probability\
+$Sum	Probability\
 2   	0.0278\
 3	    0.0552\
 4	    0.0832\
@@ -18,7 +18,7 @@ Sum	Probability\
 9	    0.1111\
 10	    0.0837\
 11	    0.0550\
-12	    0.0276\
+12	    0.0276\$
 
 **Analytical probabilities**:
 Sum	Probability
