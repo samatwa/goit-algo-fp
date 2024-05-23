@@ -1,6 +1,7 @@
 import uuid
 import networkx as nx
 import matplotlib.pyplot as plt
+import heapq
 
 
 class Node:
@@ -45,47 +46,31 @@ def draw_tree(tree_root):
             node_size=2500, node_color=colors)
     plt.show()
 
-
-def heapify(arr, n, i):
-    smallest = i
-    l = 2 * i + 1
-    r = 2 * i + 2
-
-    if l < n and arr[l].val < arr[smallest].val:
-        smallest = l
-
-    if r < n and arr[r].val < arr[smallest].val:
-        smallest = r
-
-    if smallest != i:
-        arr[i], arr[smallest] = arr[smallest], arr[i]
-        heapify(arr, n, smallest)
-
-
+# Функція для перетворення списку в бінарну купу (мін-купа)
 def build_min_heap(elements):
-    nodes = [Node(key) for key in elements]
-    n = len(nodes)
+    heapq.heapify(elements)
+    return elements
 
-    for i in range(n//2 - 1, -1, -1):
-        heapify(nodes, n, i)
-
-    for i in range(n):
-        if 2 * i + 1 < n:
+# Функція для побудови дерева з бінарної купи
+def build_tree_from_heap(heap):
+    nodes = [Node(key) for key in heap]
+    for i in range(len(nodes) // 2):
+        if 2 * i + 1 < len(nodes):
             nodes[i].left = nodes[2 * i + 1]
-        if 2 * i + 2 < n:
+        if 2 * i + 2 < len(nodes):
             nodes[i].right = nodes[2 * i + 2]
-
-    return nodes[0]
-
-
-def visualize_heap(elements):
-    root = build_min_heap(elements)
-    draw_tree(root)
+    return nodes[0] if nodes else None
 
 def main():
-    # Приклад використання для побудови та візуалізації мін-купи
-    elements = [0, 4, 10, 5, 1, 3]
-    visualize_heap(elements)
+    # Створення та візуалізація бінарної купи
+    elements = [3, 1, 6, 5, 2, 8, 7]
+    min_heap = build_min_heap(elements)
+    print("Min-heap:", min_heap)
+    heap_tree_root = build_tree_from_heap(min_heap)
+
+    # Відображення дерева бінарної купи
+    draw_tree(heap_tree_root)
+
 
 if __name__ == "__main__":
     main()

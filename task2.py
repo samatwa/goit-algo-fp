@@ -1,48 +1,57 @@
 import turtle
 import math
 
-def draw_pythagoras_tree(length, level):
-    """
-    Функція для малювання фрактала "дерево Піфагора" за допомогою рекурсії.
+# Функція для малювання дерева Піфагора
 
-    Параметри:
-    - length: довжина початкової гілки
-    - level: рівень рекурсії, глибина дерева
-    """
 
-    # Базовий випадок для рекурсії: якщо рівень 0, повернення
+def draw_pythagoras_tree(t, branch_length, level):
+    """Аргументи: t - об'єкт черепашки, branch_length - довжина гілки, level - поточний рівень рекурсії"""
     if level == 0:
         return
-    
-    # Малюємо початкову гілку
-    turtle.forward(length)
 
-    # Поворот та рекурсивний виклик для лівої гілки
-    turtle.left(45)
-    draw_pythagoras_tree(length * (math.sqrt(2) / 2), level - 1) 
+    # Малюємо основну гілку
+    t.forward(branch_length)
 
-    # Поворот та рекурсивний виклик для правої гілки
-    turtle.right(90)
-    draw_pythagoras_tree(length * (math.sqrt(2) / 2), level - 1)
+    # Малюємо праву піддереву
+    t.left(45)
+    draw_pythagoras_tree(t, branch_length * math.sqrt(2)/2, level - 1)
+    t.right(45)
 
-    # Повернення до початкового положення
-    turtle.left(45)
-    turtle.backward(length)
+    # Малюємо ліву піддереву
+    t.right(45)
+    draw_pythagoras_tree(t, branch_length * math.sqrt(2)/2, level - 1)
+    t.left(45)
+
+    # Повертаємося до початкової позиції
+    t.backward(branch_length)
+
 
 def main():
-    # Запит користувача на введення рівня рекурсії
+    # Запитуємо рівень рекурсії у користувача
     level = int(input("Enter the level of recursion: "))
 
-    # Налаштування швидкості малювання та орієнтація turtle
-    turtle.speed("fastest")
-    turtle.left(90)
-    turtle.color("green")
+    # Налаштовуємо екран
+    screen = turtle.Screen()
+    screen.bgcolor("white")
 
-    # Виклик функції для малювання дерева
-    draw_pythagoras_tree(100, level)
+    # Налаштовуємо черепашку
+    t = turtle.Turtle()
+    t.color("green")
+    t.speed(0)
+    t.left(90)  # Повертаємо черепашку вгору
 
-    # Виклик функції для завершення turtle
-    turtle.done()
+    # Переміщуємо черепашку до кращої стартової позиції
+    t.penup()
+    t.goto(0, -100)
+    t.pendown()
+
+    # Малюємо дерево
+    draw_pythagoras_tree(t, 100, level)
+
+    # Завершення
+    t.hideturtle()
+    screen.mainloop()
+
 
 if __name__ == "__main__":
     main()
